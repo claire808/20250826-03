@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>運動頭帶 Web AR (Mobile)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div id="errorBanner" class="error hidden"></div>
+    <video id="video" playsinline autoplay muted></video>
+    <canvas id="overlay"></canvas>
+
+    <div class="topbar">
+      <button id="beautyToggle" class="pill on">美肌</button>
+      <button id="arToggle" class="pill on">泡泡</button>
+      <button id="helpBtn" class="pill">?</button>
+    </div>
+
+    <div class="bottombar">
+      <div class="shutter-row">
+        <button id="colorPickerBtn" class="round small" title="頭帶底色"><span id="colorDot"></span></button>
+        <button id="shutterBtn" class="round big" title="拍照"></button>
+        <button id="flipBtn" class="round small" title="切換鏡頭">⇄</button>
+      </div>
+
+      <div class="seg">
+        <button class="seg-btn active" data-tab="styles">頭帶款式</button>
+        <button class="seg-btn" data-tab="text">自訂文字</button>
+      </div>
+
+      <div id="tab-styles" class="tab active">
+        <div class="swatches" id="colorSwatches"></div>
+        <div class="styles" id="styleGallery"></div>
+      </div>
+
+      <div id="tab-text" class="tab">
+        <label class="field"><span>自訂文字</span>
+          <input id="customText" type="text" placeholder="例如：ECI SPORTS" maxlength="28" />
+        </label>
+        <label class="field"><span>文字大小</span>
+          <input id="textSize" type="range" min="14" max="64" value="36" />
+        </label>
+        <label class="field"><span>粗細</span>
+          <input id="textWeight" type="range" min="100" max="900" step="100" value="700" />
+        </label>
+        <label class="field row"><span>循環捲動</span>
+          <label class="switch"><input id="loopText" type="checkbox" checked /><span></span></label>
+        </label>
+        <div class="hint">提示：拍照時會自動合成美肌與頭帶圖層。</div>
+      </div>
+    </div>
+
+    <div id="preview" class="hidden">
+      <img id="previewImg" alt="snapshot" />
+      <div class="preview-actions">
+        <a id="dlBtn" class="pill" download="headband.png">下載圖片</a>
+        <button id="shareBtn" class="pill">分享</button>
+        <button id="closePreview" class="pill secondary">關閉</button>
+      </div>
+    </div>
+
+    <div id="help" class="help hidden">
+      <div class="sheet">
+        <h3>使用說明</h3>
+        <ol>
+          <li>允許相機權限後，選擇顏色與款式。</li>
+          <li>「自訂文字」可設定內容、大小、粗細與是否捲動。</li>
+          <li>預設開啟「美肌」與「張嘴冒泡泡（公司 Logo）」。</li>
+          <li>點擊大白色按鈕拍照，可下載或分享。</li>
+        </ol>
+        <button id="closeHelp" class="pill">知道了</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
